@@ -7,11 +7,19 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Build/test output
+slides/
+*.aux
+*.nav
+*.out
+*.snm
+*.toc
+
 # OS/editor
 .DS_Store
 Thumbs.db
 
-# Stata outputs (keep if you want, but usually generated)
+# Stata outputs (usually generated)
 *.smcl
 
 # Codex/Claude local metadata
