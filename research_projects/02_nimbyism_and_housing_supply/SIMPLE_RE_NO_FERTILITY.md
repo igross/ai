@@ -58,6 +58,7 @@ p^* = a + bN^Y - c(\bar H - \phi\theta_0)
 A runnable toy solver is provided in:
 
 - `code/steadystate/simple_two_age_re_no_fertility.m`
+- `code/steadystate/discrete_price_states/simple_two_age_re_no_fertility_discrete_prices.m`
 
 Call in MATLAB:
 
@@ -70,4 +71,33 @@ Optional parameter override:
 ```matlab
 par = struct('theta0',0.35,'phi',0.5,'Ny',1.1);
 out = simple_two_age_re_no_fertility(par);
+```
+
+## Discrete 3-level price-state version (low/medium/high)
+
+To constrain the rational-expectations price state space, a new version
+uses exactly three price levels (`low`, `medium`, `high`) instead of a
+continuum.
+
+- The default levels are centered around the continuous steady state `p*`:
+  `[p* - 0.08, p*, p* + 0.08]`.
+- This choice makes the medium level the intended steady-state anchor.
+- This version is solved under perfect foresight with a deterministic
+  next-state policy on the 3-point price grid (no transition matrix).
+- A steady state is a fixed point of the deterministic mapping `i -> g(i)`.
+
+Run in MATLAB:
+
+```matlab
+out = simple_two_age_re_no_fertility_discrete_prices();
+```
+
+Inspect key diagnostics:
+
+```matlab
+out.policy_next_state         % deterministic map i -> g(i)
+out.fixed_points              % fixed points where g(i)=i
+out.medium_is_steady_state    % whether medium is a fixed point
+out.steady_state_price        % selected steady-state price
+out.residuals                 % continuous-implied minus chosen next-level
 ```
